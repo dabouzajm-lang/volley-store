@@ -1,13 +1,23 @@
-import { FaShoppingCart } from "react-icons/fa";
+import { useContext } from "react";
 
 import { Link } from "react-router-dom";
 
+import { FaShoppingCart } from "react-icons/fa";
 
-function CartWidget(){
+import { CartContext } from "../../context/CartContext";
+
+
+function CartWidget() {
+
+    const { getTotalQuantity } = useContext(CartContext);
+
+
+    const totalQuantity = getTotalQuantity();
+
 
     return (
 
-        <Link 
+        <Link
             to="/cart"
             className="btn btn-warning"
         >
@@ -15,12 +25,12 @@ function CartWidget(){
             <FaShoppingCart />
 
             <span className="ms-2">
-                0
+                {totalQuantity}
             </span>
 
         </Link>
 
-    )
+    );
 
 }
 
