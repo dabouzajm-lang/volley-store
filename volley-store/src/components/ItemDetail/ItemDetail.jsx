@@ -1,14 +1,34 @@
+import { useContext } from "react";
+
+import { CartContext } from "../../context/CartContext";
+
 import ItemCount from "../ItemCount/ItemCount";
+
 
 function ItemDetail({ product }) {
 
+    const { addItem } = useContext(CartContext);
+
+
     if (!product) {
-        return <h2>Producto no encontrado</h2>;
+
+        return (
+
+            <h2 className="text-center">
+                Producto no encontrado
+            </h2>
+
+        );
+
     }
 
+
     const handleAdd = (quantity) => {
-        console.log(`Agregaste ${quantity} unidades`);
+
+        addItem(product, quantity);
+
     };
+
 
     return (
 
@@ -20,15 +40,28 @@ function ItemDetail({ product }) {
                 alt={product.name}
             />
 
+
             <div className="card-body">
 
-                <h2>{product.name}</h2>
+                <h2>
+                    {product.name}
+                </h2>
 
-                <p>Precio: ${product.price}</p>
 
-                <p>Stock disponible: {product.stock}</p>
+                <p>
+                    Precio: ${product.price}
+                </p>
 
-                <p>Categoría: {product.category}</p>
+
+                <p>
+                    Stock disponible: {product.stock}
+                </p>
+
+
+                <p>
+                    Categoría: {product.category}
+                </p>
+
 
                 <ItemCount
                     stock={product.stock}
@@ -41,6 +74,8 @@ function ItemDetail({ product }) {
         </div>
 
     );
+
 }
+
 
 export default ItemDetail;
