@@ -1,9 +1,75 @@
+import { useEffect, useState } from "react";
+
+import { collection, getDocs } from "firebase/firestore";
+
+import { db } from "../../firebase";
+
 import ItemList from "../ItemList/ItemList";
 
-import products from "../../data/products";
+
+function ItemListContainer() {
+
+    const [products, setProducts] = useState([]);
+
+    const [loading, setLoading] = useState(true);
 
 
-function ItemListContainer(){
+    useEffect(() => {
+
+        const productsCollection = collection(db, "products");
+
+
+        getDocs(productsCollection)
+            .then((snapshot) => {
+
+                const productsList = snapshot.docs.map((doc) => {
+
+                    return {
+                        id: doc.id,
+                        ...doc.data()
+                    };
+
+                });
+
+
+                setProducts(productsList);
+
+            })
+
+            .catch((error) => {
+
+                console.error(
+                    "Error obteniendo productos:",
+                    error
+                );
+
+            })
+
+            .finally(() => {
+
+                setLoading(false);
+
+            });
+
+    }, []);
+
+
+    if (loading) {
+
+        return (
+
+            <div className="container text-center mt-5">
+
+                <h2>
+                    Cargando productos...
+                </h2>
+
+            </div>
+
+        );
+
+    }
+
 
     return (
 
@@ -13,13 +79,11 @@ function ItemListContainer(){
                 Productos destacados
             </h2>
 
-
-            <ItemList products={products}/>
-
+            <ItemList products={products} />
 
         </div>
 
-    )
+    );
 
 }
 
