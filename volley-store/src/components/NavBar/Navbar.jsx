@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import CartWidget from "../CartWidget/CartWidget";
 
 
-function NavBar() {
-
+function Navbar() {
 
     return (
 
@@ -12,57 +11,93 @@ function NavBar() {
 
             <div className="container">
 
-
-                <Link 
-                    className="navbar-brand"
+                <Link
                     to="/"
+                    className="navbar-brand"
                 >
-                    🏐 Volley Store
+                    Volley Store
                 </Link>
 
 
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
 
-                <div>
+                    <span className="navbar-toggler-icon"></span>
 
-
-                    <Link 
-                        className="btn btn-outline-light me-2"
-                        to="/category/pelotas"
-                    >
-                        Pelotas
-                    </Link>
-
-
-                    <Link 
-                        className="btn btn-outline-light me-2"
-                        to="/category/indumentaria"
-                    >
-                        Indumentaria
-                    </Link>
+                </button>
 
 
-                    <Link 
-                        className="btn btn-outline-light"
-                        to="/category/accesorios"
-                    >
-                        Accesorios
-                    </Link>
+                <div
+                    className="collapse navbar-collapse"
+                    id="navbarNav"
+                >
 
+                    <div className="navbar-nav">
+
+                        <Link
+                            to="/"
+                            className="nav-link"
+                        >
+                            Todos
+                        </Link>
+
+
+                        <Link
+                            to="/categoria/pelotas"
+                            className="nav-link"
+                        >
+                            Pelotas
+                        </Link>
+
+
+                        <Link
+                            to="/categoria/accesorios"
+                            className="nav-link"
+                        >
+                            Accesorios
+                        </Link>
+
+
+                        <Link
+                            to="/categoria/indumentaria"
+                            className="nav-link"
+                        >
+                            Indumentaria
+                        </Link>
+
+
+                        <Link
+                            to="/categoria/calzado"
+                            className="nav-link"
+                        >
+                            Calzado
+                        </Link>
+
+                    </div>
+
+
+                    <div className="ms-auto">
+
+                        <CartWidget />
+
+                    </div>
 
                 </div>
-
-
-
-                <CartWidget />
-
 
             </div>
 
         </nav>
 
-    )
+    );
 
 }
 
 
-export default NavBar;
+export default Navbar;

@@ -9,7 +9,6 @@ import { db } from "../../firebase";
 import ItemDetail from "../ItemDetail/ItemDetail";
 
 
-
 function ItemDetailContainer() {
 
     const { itemId } = useParams();
@@ -21,6 +20,9 @@ function ItemDetailContainer() {
 
     useEffect(() => {
 
+        setLoading(true);
+
+
         const productDoc = doc(
             db,
             "products",
@@ -29,6 +31,7 @@ function ItemDetailContainer() {
 
 
         getDoc(productDoc)
+
             .then((snapshot) => {
 
                 if (snapshot.exists()) {
@@ -40,9 +43,7 @@ function ItemDetailContainer() {
 
                 } else {
 
-                    console.log(
-                        "El producto no existe"
-                    );
+                    setProduct(null);
 
                 }
 
@@ -54,6 +55,8 @@ function ItemDetailContainer() {
                     "Error obteniendo el producto:",
                     error
                 );
+
+                setProduct(null);
 
             })
 

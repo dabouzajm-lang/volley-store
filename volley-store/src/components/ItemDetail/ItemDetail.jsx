@@ -1,4 +1,6 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
+
+import { Link } from "react-router-dom";
 
 import { CartContext } from "../../context/CartContext";
 
@@ -8,6 +10,8 @@ import ItemCount from "../ItemCount/ItemCount";
 function ItemDetail({ product }) {
 
     const { addItem } = useContext(CartContext);
+
+    const [added, setAdded] = useState(false);
 
 
     if (!product) {
@@ -26,6 +30,8 @@ function ItemDetail({ product }) {
     const handleAdd = (quantity) => {
 
         addItem(product, quantity);
+
+        setAdded(true);
 
     };
 
@@ -63,11 +69,45 @@ function ItemDetail({ product }) {
                 </p>
 
 
-                <ItemCount
-                    stock={product.stock}
-                    initial={1}
-                    onAdd={handleAdd}
-                />
+                {!added ? (
+
+                    <ItemCount
+                        stock={product.stock}
+                        initial={1}
+                        onAdd={handleAdd}
+                    />
+
+                ) : (
+
+                    <div className="mt-4">
+
+                        <p className="text-success">
+                            Producto agregado al carrito.
+                        </p>
+
+
+                        <div className="d-flex gap-2">
+
+                            <Link
+                                to="/cart"
+                                className="btn btn-primary"
+                            >
+                                Ver carrito
+                            </Link>
+
+
+                            <Link
+                                to="/"
+                                className="btn btn-secondary"
+                            >
+                                Seguir comprando
+                            </Link>
+
+                        </div>
+
+                    </div>
+
+                )}
 
             </div>
 
