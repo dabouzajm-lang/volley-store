@@ -1,63 +1,51 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import NavBar from "./components/NavBar/Navbar";
+import Navbar from "./components/NavBar/Navbar";
 import ItemListContainer from "./components/ItemListContainer/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer";
 import Cart from "./components/Cart/Cart";
+
+
 function App() {
 
-  return (
+    return (
 
-    <BrowserRouter>
+        <BrowserRouter>
 
-      <NavBar />
+            <Navbar />
 
-      <Routes>
+            <Routes>
 
-        <Route
-          path="/"
-          element={<ItemListContainer />}
-        />
+                {/* Catálogo */}
+                <Route
+                    path="/"
+                    element={<ItemListContainer />}
+                />
 
-
-        <Route
-          path="/category/:categoryId"
-          element={
-            <h1 className="text-center mt-5">
-              Categoría
-            </h1>
-          }
-        />
+                {/* Categorías */}
+                 <Route
+                    path="/categoria/:categoryId"
+                    element={<ItemListContainer />}
+                />
 
 
-      <Route
-    path="/item/:itemId"
-    element={<ItemDetailContainer />}
-        />
-        
+                {/* Detalle */}
+                <Route
+                   path="/item/:itemId"
+                   element={<ItemDetailContainer />}
+                />
 
+                {/* Carrito */}
+                <Route
+                    path="/cart"
+                    element={<Cart />}
+                />
 
-      <Route
-        path="/cart"
-       element={<Cart />}
-        />
+            </Routes>
 
+        </BrowserRouter>
 
-        <Route
-          path="/checkout"
-          element={
-            <h1 className="text-center mt-5">
-              Checkout
-            </h1>
-          }
-        />
-
-
-      </Routes>
-
-    </BrowserRouter>
-
-  );
+    );
 
 }
 

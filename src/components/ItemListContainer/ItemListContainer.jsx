@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { collection, getDocs } from "firebase/firestore";
+import { useParams } from "react-router-dom";
+
+import {
+    collection,
+    getDocs,
+    query,
+    where
+} from "firebase/firestore";
 
 import { db } from "../../firebase";
 
@@ -9,6 +16,8 @@ import ItemList from "../ItemList/ItemList";
 
 function ItemListContainer() {
 
+    const { categoryId } = useParams();
+
     const [products, setProducts] = useState([]);
 
     const [loading, setLoading] = useState(true);
@@ -16,20 +25,50 @@ function ItemListContainer() {
 
     useEffect(() => {
 
-        const productsCollection = collection(db, "products");
+        setLoading(true);
 
 
-        getDocs(productsCollection)
+        const productsCollection = collection(
+            db,
+            "products"
+        );
+
+
+        let productsQuery;
+
+
+        if (categoryId) {
+
+            productsQuery = query(
+                productsCollection,
+                where(
+                    "category",
+                    "==",
+                    categoryId
+                )
+            );
+
+        } else {
+
+            productsQuery = productsCollection;
+
+        }
+
+
+        getDocs(productsQuery)
+
             .then((snapshot) => {
 
-                const productsList = snapshot.docs.map((doc) => {
+                const productsList = snapshot.docs.map(
+                    (doc) => {
 
-                    return {
-                        id: doc.id,
-                        ...doc.data()
-                    };
+                        return {
+                            id: doc.id,
+                            ...doc.data()
+                        };
 
-                });
+                    }
+                );
 
 
                 setProducts(productsList);
@@ -51,7 +90,7 @@ function ItemListContainer() {
 
             });
 
-    }, []);
+    }, [categoryId]);
 
 
     if (loading) {
@@ -76,10 +115,29 @@ function ItemListContainer() {
         <div className="container mt-5">
 
             <h2 className="text-center mb-4">
-                Productos destacados
+
+                {categoryId
+                    ? `Categoría: ${categoryId}`
+                    : "Productos destacados"
+                }
+
             </h2>
 
-            <ItemList products={products} />
+
+            {products.length > 0 ? (
+
+                <ItemList products={products} />
+
+            ) : (
+
+                <h3 className="text-center">
+
+                    No hay productos disponibles
+                    en esta categoría.
+
+                </h3>
+
+            )}
 
         </div>
 
