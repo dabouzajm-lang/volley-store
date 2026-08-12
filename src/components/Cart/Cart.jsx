@@ -14,22 +14,42 @@ function Cart() {
     } = useContext(CartContext);
 
 
+    const getTotal = () => {
+
+        return cart.reduce(
+
+            (total, item) =>
+                total + item.price * item.quantity,
+
+            0
+
+        );
+
+    };
+
+
     // Carrito vacío
     if (cart.length === 0) {
 
         return (
 
-            <div className="container text-center mt-5">
+            <div className="container mt-5 text-center">
 
                 <h2>
                     Tu carrito está vacío
                 </h2>
 
+
+                <p className="mt-3">
+                    Agregá productos para comenzar tu compra.
+                </p>
+
+
                 <Link
                     to="/"
                     className="btn btn-primary mt-3"
                 >
-                    Volver al catálogo
+                    Ver productos
                 </Link>
 
             </div>
@@ -39,20 +59,12 @@ function Cart() {
     }
 
 
-    // Total general
-    const total = cart.reduce(
-        (acc, item) =>
-            acc + item.price * item.quantity,
-        0
-    );
-
-
     return (
 
         <div className="container mt-5">
 
             <h2 className="mb-4">
-                🛒 Carrito de compras
+                Tu carrito
             </h2>
 
 
@@ -63,59 +75,53 @@ function Cart() {
                     className="card mb-3"
                 >
 
-                    <div className="card-body">
+                    <div className="row g-0">
 
-                        <div className="row align-items-center">
+                        <div className="col-md-3">
 
+                            <img
+                                src={item.image}
+                                className="img-fluid rounded-start"
+                                alt={item.name}
+                            />
 
-                            <div className="col-md-3">
-
-                                <img
-                                    src={item.image}
-                                    alt={item.name}
-                                    className="img-fluid"
-                                />
-
-                            </div>
+                        </div>
 
 
-                            <div className="col-md-3">
+                        <div className="col-md-9">
 
-                                <h5>
+                            <div className="card-body">
+
+                                <h4 className="card-title">
                                     {item.name}
-                                </h5>
+                                </h4>
 
-                            </div>
-
-
-                            <div className="col-md-2">
 
                                 <p>
-                                    Cantidad: {item.quantity}
+                                    Precio unitario:
+                                    {" "}
+                                    ${item.price}
                                 </p>
 
-                            </div>
-
-
-                            <div className="col-md-2">
 
                                 <p>
-                                    Precio: ${item.price}
+                                    Cantidad:
+                                    {" "}
+                                    {item.quantity}
                                 </p>
 
-                            </div>
-
-
-                            <div className="col-md-2">
 
                                 <p>
-                                    Subtotal: $
-                                    {item.price * item.quantity}
+                                    Subtotal:
+                                    {" "}
+                                    <strong>
+                                        ${item.price * item.quantity}
+                                    </strong>
                                 </p>
 
 
                                 <button
-                                    className="btn btn-danger btn-sm"
+                                    className="btn btn-danger"
                                     onClick={() =>
                                         removeItem(item.id)
                                     }
@@ -124,7 +130,6 @@ function Cart() {
                                 </button>
 
                             </div>
-
 
                         </div>
 
@@ -135,34 +140,37 @@ function Cart() {
             ))}
 
 
-            <div className="text-end mt-4">
+            <div className="card mt-4">
 
-                <h3>
-                    Total: ${total}
-                </h3>
+                <div className="card-body">
+
+                    <h3>
+                        Total: ${getTotal()}
+                    </h3>
+
+
+                    <div className="d-flex gap-2 mt-3">
+
+                        <button
+                            className="btn btn-outline-danger"
+                            onClick={clearCart}
+                        >
+                            Vaciar carrito
+                        </button>
+
+
+                        <Link
+                            to="/checkout"
+                            className="btn btn-success"
+                        >
+                            Finalizar compra
+                        </Link>
+
+                    </div>
+
+                </div>
 
             </div>
-
-
-            <div className="d-flex justify-content-between mt-4">
-
-                <button
-                    className="btn btn-outline-danger"
-                    onClick={clearCart}
-                >
-                    Vaciar carrito
-                </button>
-
-
-                <Link
-                    to="/checkout"
-                    className="btn btn-success"
-                >
-                    Finalizar compra
-                </Link>
-
-            </div>
-
 
         </div>
 

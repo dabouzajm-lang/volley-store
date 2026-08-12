@@ -13,6 +13,8 @@ function ItemDetail({ product }) {
 
     const [added, setAdded] = useState(false);
 
+    const [error, setError] = useState("");
+
 
     if (!product) {
 
@@ -29,9 +31,25 @@ function ItemDetail({ product }) {
 
     const handleAdd = (quantity) => {
 
-        addItem(product, quantity);
+        const addedSuccessfully = addItem(
+            product,
+            quantity
+        );
 
-        setAdded(true);
+
+        if (addedSuccessfully) {
+
+            setError("");
+
+            setAdded(true);
+
+        } else {
+
+            setError(
+                "No hay suficiente stock disponible."
+            );
+
+        }
 
     };
 
@@ -71,11 +89,24 @@ function ItemDetail({ product }) {
 
                 {!added ? (
 
-                    <ItemCount
-                        stock={product.stock}
-                        initial={1}
-                        onAdd={handleAdd}
-                    />
+                    <>
+
+                        {error && (
+
+                            <p className="text-danger">
+                                {error}
+                            </p>
+
+                        )}
+
+
+                        <ItemCount
+                            stock={product.stock}
+                            initial={1}
+                            onAdd={handleAdd}
+                        />
+
+                    </>
 
                 ) : (
 
