@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 
+
 export const CartContext = createContext();
 
 
@@ -16,30 +17,66 @@ function CartProvider({ children }) {
         );
 
 
+        // Cantidad que ya tenemos en el carrito
+        const currentQuantity = productInCart
+            ? productInCart.quantity
+            : 0;
+
+
+        // Nueva cantidad total
+        const newQuantity = currentQuantity + quantity;
+
+
+        // Verificar stock
+        if (newQuantity > product.stock) {
+
+            console.warn(
+                "No hay suficiente stock disponible."
+            );
+
+            return false;
+
+        }
+
+
+        // Si el producto ya existe
         if (productInCart) {
 
             setCart(
+
                 cart.map((item) =>
+
                     item.id === product.id
+
                         ? {
                             ...item,
-                            quantity: item.quantity + quantity
+                            quantity: newQuantity
                         }
+
                         : item
+
                 )
+
             );
 
         } else {
 
+            // Si es un producto nuevo
             setCart([
+
                 ...cart,
+
                 {
                     ...product,
                     quantity
                 }
+
             ]);
 
         }
+
+
+        return true;
 
     };
 
@@ -55,13 +92,15 @@ function CartProvider({ children }) {
     };
 
 
-    // Eliminar un producto completo
+    // Eliminar producto completo
     const removeItem = (id) => {
 
         setCart(
+
             cart.filter(
                 (item) => item.id !== id
             )
+
         );
 
     };
