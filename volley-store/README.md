@@ -1,16 +1,78 @@
-# React + Vite
+# 🏐 Volley Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+E-commerce Single Page Application desarrollado con **React** como proyecto final, orientado a la comercialización de productos relacionados con el vóley.
 
-Currently, two official plugins are available:
+La aplicación permite visualizar un catálogo dinámico de productos, filtrarlos por categorías, consultar el detalle de cada producto, agregarlos a un carrito de compras y completar una orden mediante un formulario de checkout.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Los productos son obtenidos desde **Firebase Firestore**, mientras que las órdenes generadas por los usuarios son almacenadas también en Firestore.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📋 Descripción del proyecto
 
-## Expanding the ESLint configuration
+**Volley Store** es una aplicación web de tipo e-commerce desarrollada utilizando React.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+El proyecto fue desarrollado aplicando conceptos fundamentales del ecosistema React, incluyendo:
+
+- Componentización.
+- Hooks.
+- Manejo de eventos.
+- Estado local.
+- Estado global mediante React Context.
+- Navegación mediante React Router.
+- Renderizado condicional.
+- Consumo de datos desde Firebase Firestore.
+- Generación y almacenamiento de órdenes.
+- Validación de stock.
+- Formularios controlados.
+
+La aplicación funciona como una **Single Page Application (SPA)**, permitiendo navegar entre las distintas vistas sin realizar recargas completas del navegador.
+
+---
+
+## 🎯 Objetivos
+
+Los principales objetivos del proyecto fueron:
+
+- Desarrollar el front-end de una aplicación e-commerce utilizando React.
+- Aplicar buenas prácticas de componentización.
+- Implementar navegación utilizando React Router.
+- Administrar el estado global del carrito mediante React Context.
+- Utilizar hooks de React para manejar estados y efectos.
+- Implementar Firebase Firestore como fuente de datos.
+- Obtener dinámicamente los productos desde Firestore.
+- Generar órdenes de compra y almacenarlas en Firestore.
+- Crear una experiencia de usuario clara mediante loaders, mensajes de error y estados vacíos.
+
+---
+
+## 🛒 Funcionalidades
+
+### Catálogo
+
+La página principal muestra dinámicamente el listado de productos disponibles.
+
+Cada producto contiene información como:
+
+- Nombre.
+- Imagen.
+- Precio.
+- Categoría.
+- Stock disponible.
+
+Los productos son obtenidos directamente desde Firebase Firestore.
+
+---
+
+### Categorías
+
+El usuario puede navegar por diferentes categorías de productos.
+
+Las categorías se encuentran integradas en la barra de navegación y utilizan rutas dinámicas mediante React Router.
+
+Ejemplo:
+
+```text
+/categoria/pelotas
+/categoria/indumentaria
+/categoria/accesorios
