@@ -1,4 +1,9 @@
 import "./AboutSection.css";
+import {
+    FaVolleyballBall,
+    FaBolt,
+    FaUsers
+} from "react-icons/fa";
 
 function AboutSection() {
 
@@ -15,14 +20,14 @@ function AboutSection() {
 
                     {/* Imagen / elemento visual */}
 
-                    <div className="col-lg-6">
+                    <div className="col-lg-6 animate-fade-up">
 
                         <div className="about__visual">
 
                             <div className="about__image">
 
                                 <span>
-                                    🏐
+                                <FaVolleyballBall />
                                 </span>
 
                             </div>
@@ -48,7 +53,7 @@ function AboutSection() {
 
                     {/* Contenido */}
 
-                    <div className="col-lg-6">
+                    <div className="col-lg-6 animate-fade-up">
 
                         <span className="section-eyebrow">
                             SOBRE VOLLEY STORE
@@ -84,9 +89,14 @@ function AboutSection() {
 
                             <div className="about__value">
 
-                                <span className="about__value-icon">
-                                    🏐
-                                </span>
+                                <div className="about__image">
+
+                             <img
+                             src="/images/about-volley.jpg"
+                                alt="Equipo de vóley reunido en cancha"
+                             />
+
+                            </div>
 
                                 <div>
 
@@ -107,7 +117,7 @@ function AboutSection() {
                             <div className="about__value">
 
                                 <span className="about__value-icon">
-                                    ⚡
+                                <FaBolt />
                                 </span>
 
                                 <div>
@@ -129,7 +139,7 @@ function AboutSection() {
                             <div className="about__value">
 
                                 <span className="about__value-icon">
-                                    🤝
+                                <FaUsers />
                                 </span>
 
                                 <div>

@@ -2,6 +2,8 @@ import Hero from "../Hero/Hero";
 import CategorySection from "../CategorySection/CategorySection";
 import FeaturedProducts from "../FeaturedProducts/FeaturedProducts";
 import AboutSection from "../AboutSection/AboutSection";
+import Benefits from "../Benefits/Benefits";
+import CTA from "../CTA/CTA";
 
 
 function Home() {
@@ -18,11 +20,12 @@ function Home() {
 
             <AboutSection />
 
+            <Benefits />
+
         </main>
 
     );
 
 }
-
 
 export default Home;

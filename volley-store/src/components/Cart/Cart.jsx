@@ -4,55 +4,75 @@ import { Link } from "react-router-dom";
 
 import { CartContext } from "../../context/CartContext";
 
+import { FaShoppingBag } from "react-icons/fa";
+import { FaLock } from "react-icons/fa";
+
+import "./Cart.css";
+
 
 function Cart() {
 
     const {
         cart,
         removeItem,
-        clearCart
+        clearCart,
+        getTotalQuantity
     } = useContext(CartContext);
 
 
-    const getTotal = () => {
-
-        return cart.reduce(
-
-            (total, item) =>
-                total + item.price * item.quantity,
-
-            0
-
-        );
-
-    };
+    const total = cart.reduce(
+        (acc, item) =>
+            acc + item.price * item.quantity,
+        0
+    );
 
 
-    // Carrito vacío
+    const totalQuantity = getTotalQuantity();
+
+
     if (cart.length === 0) {
 
         return (
 
-            <div className="container mt-5 text-center">
+            <main className="cart-page cart-page--empty">
 
-                <h2>
-                    Tu carrito está vacío
-                </h2>
+                <div className="container">
+
+                    <div className="empty-cart">
+
+                        <div className="empty-cart__icon">
+                            <FaShoppingBag />
+                        </div>
 
 
-                <p className="mt-3">
-                    Agregá productos para comenzar tu compra.
-                </p>
+                        <span className="empty-cart__eyebrow">
+                            TU CARRITO
+                        </span>
 
 
-                <Link
-                    to="/"
-                    className="btn btn-primary mt-3"
-                >
-                    Ver productos
-                </Link>
+                        <h1>
+                            Todavía no agregaste productos.
+                        </h1>
 
-            </div>
+
+                        <p>
+                            Explorá nuestro catálogo y encontrá
+                            el equipamiento ideal para tu juego.
+                        </p>
+
+
+                        <Link
+                            to="/productos"
+                            className="empty-cart__button"
+                        >
+                            Explorar productos
+                        </Link>
+
+                    </div>
+
+                </div>
+
+            </main>
 
         );
 
@@ -61,118 +81,238 @@ function Cart() {
 
     return (
 
-        <div className="container mt-5">
+        <main className="cart-page">
 
-            <h2 className="mb-4">
-                Tu carrito
-            </h2>
+            <div className="container">
 
+                {/* Header */}
 
-            {cart.map((item) => (
+                <header className="cart-page__header">
 
-                <div
-                    key={item.id}
-                    className="card mb-3"
-                >
+                    <div>
 
-                    <div className="row g-0">
+                        <span className="cart-page__eyebrow">
+                            TU COMPRA
+                        </span>
 
-                        <div className="col-md-3">
+                        <h1>
+                            Carrito
+                        </h1>
 
-                            <img
-                                src={item.image}
-                                className="img-fluid rounded-start"
-                                alt={item.name}
-                            />
+                        <p>
+                            {totalQuantity}{" "}
+                            {totalQuantity === 1
+                                ? "producto"
+                                : "productos"
+                            } en tu carrito.
+                        </p>
 
-                        </div>
-
-
-                        <div className="col-md-9">
-
-                            <div className="card-body">
-
-                                <h4 className="card-title">
-                                    {item.name}
-                                </h4>
+                    </div>
 
 
-                                <p>
-                                    Precio unitario:
-                                    {" "}
-                                    ${item.price}
-                                </p>
+                    <button
+                        type="button"
+                        className="cart-page__clear"
+                        onClick={clearCart}
+                    >
+                        Vaciar carrito
+                    </button>
+
+                </header>
 
 
-                                <p>
-                                    Cantidad:
-                                    {" "}
-                                    {item.quantity}
-                                </p>
+                <div className="cart-layout">
 
+                    {/* Product list */}
 
-                                <p>
-                                    Subtotal:
-                                    {" "}
-                                    <strong>
-                                        ${item.price * item.quantity}
-                                    </strong>
-                                </p>
+                    <section className="cart-products">
 
+                        {cart.map((item) => (
 
-                                <button
-                                    className="btn btn-danger"
-                                    onClick={() =>
-                                        removeItem(item.id)
-                                    }
+                            <article
+                                className="cart-item"
+                                key={item.id}
+                            >
+
+                                <Link
+                                    to={`/item/${item.id}`}
+                                    className="cart-item__image-wrapper"
                                 >
-                                    Eliminar
-                                </button>
+
+                                    <img
+                                        src={item.image}
+                                        alt={item.name}
+                                        className="cart-item__image"
+                                    />
+
+                                </Link>
+
+
+                                <div className="cart-item__info">
+
+                                    <span className="cart-item__category">
+                                        {item.category}
+                                    </span>
+
+
+                                    <Link
+                                        to={`/item/${item.id}`}
+                                        className="cart-item__name"
+                                    >
+                                        {item.name}
+                                    </Link>
+
+
+                                    <p className="cart-item__unit-price">
+                                        Precio unitario: ${item.price}
+                                    </p>
+
+
+                                    <div className="cart-item__meta">
+
+                                        <span>
+                                            Cantidad
+                                            <strong>
+                                                {item.quantity}
+                                            </strong>
+                                        </span>
+
+
+                                        <span>
+                                            Subtotal
+                                            <strong>
+                                                $
+                                                {item.price *
+                                                    item.quantity}
+                                            </strong>
+                                        </span>
+
+                                    </div>
+
+
+                                    <button
+                                        type="button"
+                                        className="cart-item__remove"
+                                        onClick={() =>
+                                            removeItem(item.id)
+                                        }
+                                    >
+                                        Eliminar producto
+                                    </button>
+
+                                </div>
+
+                            </article>
+
+                        ))}
+
+                    </section>
+
+
+                    {/* Summary */}
+
+                    <aside className="cart-summary">
+
+                        <span className="cart-summary__eyebrow">
+                            RESUMEN
+                        </span>
+
+                        <h2>
+                            Resumen de compra
+                        </h2>
+
+
+                        <div className="cart-summary__rows">
+
+                            <div className="cart-summary__row">
+
+                                <span>
+                                    Productos
+                                </span>
+
+                                <strong>
+                                    {totalQuantity}
+                                </strong>
+
+                            </div>
+
+
+                            <div className="cart-summary__row">
+
+                                <span>
+                                    Subtotal
+                                </span>
+
+                                <strong>
+                                    ${total}
+                                </strong>
+
+                            </div>
+
+
+                            <div className="cart-summary__row">
+
+                                <span>
+                                    Envío
+                                </span>
+
+                                <strong className="cart-summary__free">
+                                    A calcular
+                                </strong>
 
                             </div>
 
                         </div>
 
-                    </div>
 
-                </div>
+                        <div className="cart-summary__total">
 
-            ))}
+                            <span>
+                                Total
+                            </span>
 
+                            <strong>
+                                ${total}
+                            </strong>
 
-            <div className="card mt-4">
-
-                <div className="card-body">
-
-                    <h3>
-                        Total: ${getTotal()}
-                    </h3>
-
-
-                    <div className="d-flex gap-2 mt-3">
-
-                        <button
-                            className="btn btn-outline-danger"
-                            onClick={clearCart}
-                        >
-                            Vaciar carrito
-                        </button>
+                        </div>
 
 
                         <Link
                             to="/checkout"
-                            className="btn btn-success"
+                            className="cart-summary__checkout"
                         >
                             Finalizar compra
                         </Link>
 
-                    </div>
+
+                        <Link
+                            to="/productos"
+                            className="cart-summary__continue"
+                        >
+                            ← Seguir comprando
+                        </Link>
+
+
+                        <div className="cart-summary__security">
+
+                            <span>
+                                <FaLock />
+                            </span>
+
+                            <p>
+                                Compra segura y protegida.
+                            </p>
+
+                        </div>
+
+                    </aside>
 
                 </div>
 
             </div>
 
-        </div>
+        </main>
 
     );
 

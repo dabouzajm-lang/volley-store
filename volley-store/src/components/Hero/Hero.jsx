@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import ScrollLink from "../ScrollLink/ScrollLink";
+
 import "./Hero.css";
 
 function Hero() {
@@ -14,63 +16,22 @@ function Hero() {
 
                     <div className="col-lg-6">
 
-                        <span className="hero__eyebrow">
-                            EQUIPAMIENTO PARA QUIENES VIVEN EL VÓLEY
-                        </span>
-
-                        <h1 className="hero__title">
-
-                            Llevá tu juego
-                            <span> al siguiente nivel.</span>
-
-                        </h1>
-
-                        <p className="hero__description">
-
-                            Descubrí equipamiento, indumentaria y accesorios
-                            seleccionados para jugadores que buscan mejorar
-                            dentro y fuera de la cancha.
-
-                        </p>
-
-                        <div className="hero__actions">
-
-                            <Link
-                                to="/productos"
-                                className="hero__button hero__button--primary"
-                                >
-                                Ver productos
-                            </Link>
-
-                            <Link
-                                to="/#nosotros"
-                                className="hero__button hero__button--secondary"
-                            >
-                                Conocé nuestra historia
-                            </Link>
-
-                        </div>
-
-                    </div>
-
-                    <div className="col-lg-6">
-
                         <div className="hero__visual">
 
-                            <div className="hero__circle"></div>
+                            <img
+                                src="/images/hero-volley.jpg"
+                                alt="Jugador de vóley en acción"
+                                className="hero__image"
+                                />
 
-                            <div className="hero__ball">
-                                🏐
-                            </div>
-
-                            <div className="hero__badge">
+                                <div className="hero__badge">
 
                                 <strong>
-                                    +100
+                                +100
                                 </strong>
 
                                 <span>
-                                    productos
+                                productos
                                 </span>
 
                             </div>
@@ -78,7 +39,6 @@ function Hero() {
                         </div>
 
                     </div>
-
                 </div>
 
             </div>
