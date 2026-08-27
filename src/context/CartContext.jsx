@@ -1,4 +1,7 @@
-import { createContext, useState } from "react";
+import {
+    createContext,
+    useState
+} from "react";
 
 
 export const CartContext = createContext();
@@ -9,7 +12,13 @@ function CartProvider({ children }) {
     const [cart, setCart] = useState([]);
 
 
-    // Agregar producto al carrito
+    /*
+     * Agrega un producto al carrito.
+     *
+     * También verifica la cantidad que ya
+     * existe para evitar superar el stock.
+     */
+
     const addItem = (product, quantity) => {
 
         const productInCart = cart.find(
@@ -17,17 +26,16 @@ function CartProvider({ children }) {
         );
 
 
-        // Cantidad que ya tenemos en el carrito
-        const currentQuantity = productInCart
-            ? productInCart.quantity
-            : 0;
+        const currentQuantity =
+            productInCart
+                ? productInCart.quantity
+                : 0;
 
 
-        // Nueva cantidad total
-        const newQuantity = currentQuantity + quantity;
+        const newQuantity =
+            currentQuantity + quantity;
 
 
-        // Verificar stock
         if (newQuantity > product.stock) {
 
             console.warn(
@@ -39,7 +47,6 @@ function CartProvider({ children }) {
         }
 
 
-        // Si el producto ya existe
         if (productInCart) {
 
             setCart(
@@ -61,7 +68,6 @@ function CartProvider({ children }) {
 
         } else {
 
-            // Si es un producto nuevo
             setCart([
 
                 ...cart,
@@ -81,18 +87,11 @@ function CartProvider({ children }) {
     };
 
 
-    // Cantidad total de unidades
-    const getTotalQuantity = () => {
+    /*
+     * Elimina completamente un producto
+     * según su ID.
+     */
 
-        return cart.reduce(
-            (total, item) => total + item.quantity,
-            0
-        );
-
-    };
-
-
-    // Eliminar producto completo
     const removeItem = (id) => {
 
         setCart(
@@ -106,10 +105,55 @@ function CartProvider({ children }) {
     };
 
 
-    // Vaciar carrito
+    /*
+     * Vacía todo el carrito.
+     */
+
     const clearCart = () => {
 
         setCart([]);
+
+    };
+
+
+    /*
+     * Cantidad total de unidades.
+     *
+     * Ejemplo:
+     *
+     * Pelota x2
+     * Rodilleras x1
+     *
+     * Resultado: 3
+     */
+
+    const getTotalQuantity = () => {
+
+        return cart.reduce(
+            (total, item) =>
+                total + item.quantity,
+            0
+        );
+
+    };
+
+
+    /*
+     * Precio total del carrito.
+     *
+     * Centralizamos este cálculo para que
+     * Cart y Checkout utilicen exactamente
+     * la misma lógica.
+     */
+
+    const getTotal = () => {
+
+        return cart.reduce(
+            (total, item) =>
+                total +
+                item.price * item.quantity,
+            0
+        );
 
     };
 
@@ -120,9 +164,10 @@ function CartProvider({ children }) {
             value={{
                 cart,
                 addItem,
-                getTotalQuantity,
                 removeItem,
-                clearCart
+                clearCart,
+                getTotalQuantity,
+                getTotal
             }}
         >
 

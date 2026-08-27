@@ -1,4 +1,7 @@
-import { useContext, useState } from "react";
+import {
+    useContext,
+    useState
+} from "react";
 
 import {
     addDoc,
@@ -12,6 +15,8 @@ import { db } from "../../firebase";
 
 import { CartContext } from "../../context/CartContext";
 
+import formatPrice from "../../utils/formatPrice";
+
 import "./Checkout.css";
 
 
@@ -20,37 +25,45 @@ function Checkout() {
     const {
         cart,
         clearCart,
-        getTotalQuantity
+        getTotalQuantity,
+        getTotal
     } = useContext(CartContext);
 
 
-    const [formData, setFormData] = useState({
-        name: "",
-        phone: "",
-        email: ""
-    });
+    const [formData, setFormData] =
+        useState({
+            name: "",
+            phone: "",
+            email: ""
+        });
 
 
-    const [loading, setLoading] = useState(false);
-
-    const [orderId, setOrderId] = useState(null);
-
-    const [error, setError] = useState("");
+    const [loading, setLoading] =
+        useState(false);
 
 
-    const total = cart.reduce(
-        (acc, item) =>
-            acc + item.price * item.quantity,
-        0
-    );
+    const [orderId, setOrderId] =
+        useState(null);
 
 
-    const totalQuantity = getTotalQuantity();
+    const [error, setError] =
+        useState("");
+
+
+    const total =
+        getTotal();
+
+
+    const totalQuantity =
+        getTotalQuantity();
 
 
     const handleChange = (event) => {
 
-        const { name, value } = event.target;
+        const {
+            name,
+            value
+        } = event.target;
 
 
         setFormData({
@@ -87,35 +100,58 @@ function Checkout() {
             const order = {
 
                 buyer: {
-                    name: formData.name,
-                    phone: formData.phone,
-                    email: formData.email
+
+                    name:
+                        formData.name,
+
+                    phone:
+                        formData.phone,
+
+                    email:
+                        formData.email
+
                 },
 
-                items: cart.map((item) => ({
-                    id: item.id,
-                    name: item.name,
-                    price: item.price,
-                    quantity: item.quantity
-                })),
+
+                items: cart.map(
+                    (item) => ({
+
+                        id:
+                            item.id,
+
+                        name:
+                            item.name,
+
+                        price:
+                            item.price,
+
+                        quantity:
+                            item.quantity
+
+                    })
+                ),
+
 
                 total,
 
-                date: serverTimestamp()
+                date:
+                    serverTimestamp()
 
             };
 
 
-            const ordersCollection = collection(
-                db,
-                "orders"
-            );
+            const ordersCollection =
+                collection(
+                    db,
+                    "orders"
+                );
 
 
-            const orderReference = await addDoc(
-                ordersCollection,
-                order
-            );
+            const orderReference =
+                await addDoc(
+                    ordersCollection,
+                    order
+                );
 
 
             setOrderId(
@@ -147,6 +183,10 @@ function Checkout() {
     };
 
 
+    /*
+     * COMPRA EXITOSA
+     */
+
     if (orderId) {
 
         return (
@@ -168,14 +208,22 @@ function Checkout() {
 
 
                         <h1>
+
                             Gracias por tu compra,
-                            <span> {formData.name}.</span>
+
+                            <span>
+                                {" "}
+                                {formData.name}.
+                            </span>
+
                         </h1>
 
 
                         <p>
+
                             Tu orden fue registrada correctamente
                             en nuestro sistema.
+
                         </p>
 
 
@@ -222,6 +270,10 @@ function Checkout() {
     }
 
 
+    /*
+     * CARRITO VACÍO
+     */
+
     if (cart.length === 0) {
 
         return (
@@ -243,8 +295,10 @@ function Checkout() {
 
 
                         <p>
-                            Agregá productos al carrito antes
-                            de iniciar una compra.
+
+                            Agregá productos al carrito
+                            antes de iniciar una compra.
+
                         </p>
 
 
@@ -266,6 +320,10 @@ function Checkout() {
     }
 
 
+    /*
+     * CHECKOUT
+     */
+
     return (
 
         <main className="checkout-page">
@@ -278,9 +336,11 @@ function Checkout() {
                         ÚLTIMO PASO
                     </span>
 
+
                     <h1>
                         Finalizá tu compra
                     </h1>
+
 
                     <p>
                         Completá tus datos para generar la orden.
@@ -301,6 +361,7 @@ function Checkout() {
                                 01
                             </span>
 
+
                             <div>
 
                                 <h2>
@@ -308,8 +369,10 @@ function Checkout() {
                                 </h2>
 
                                 <p>
+
                                     Usaremos estos datos para
                                     registrar tu compra.
+
                                 </p>
 
                             </div>
@@ -319,7 +382,10 @@ function Checkout() {
 
                         {error && (
 
-                            <div className="checkout-form__error">
+                            <div
+                                className="checkout-form__error"
+                                role="alert"
+                            >
                                 {error}
                             </div>
 
@@ -405,8 +471,10 @@ function Checkout() {
 
 
                         <p className="checkout-form__security">
+
                             Tus datos se utilizan únicamente
                             para procesar esta orden.
+
                         </p>
 
                     </section>
@@ -422,18 +490,23 @@ function Checkout() {
                                 02
                             </span>
 
+
                             <div>
 
                                 <h2>
                                     Tu pedido
                                 </h2>
 
+
                                 <p>
+
                                     {totalQuantity}{" "}
+
                                     {totalQuantity === 1
                                         ? "producto"
                                         : "productos"
                                     }
+
                                 </p>
 
                             </div>
@@ -467,16 +540,20 @@ function Checkout() {
                                         </strong>
 
                                         <span>
-                                            Cantidad: {item.quantity}
+                                            Cantidad:{" "}
+                                            {item.quantity}
                                         </span>
 
                                     </div>
 
 
                                     <span className="checkout-summary__item-price">
-                                        $
-                                        {item.price *
-                                            item.quantity}
+
+                                        {formatPrice(
+                                            item.price *
+                                            item.quantity
+                                        )}
+
                                     </span>
 
                                 </article>
@@ -495,7 +572,11 @@ function Checkout() {
                                 </span>
 
                                 <strong>
-                                    ${total}
+
+                                    {formatPrice(
+                                        total
+                                    )}
+
                                 </strong>
 
                             </div>
@@ -523,7 +604,11 @@ function Checkout() {
                             </span>
 
                             <strong>
-                                ${total}
+
+                                {formatPrice(
+                                    total
+                                )}
+
                             </strong>
 
                         </div>

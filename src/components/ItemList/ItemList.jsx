@@ -10,7 +10,7 @@ function ItemList({ products }) {
             {products.map((product) => (
 
                 <div
-                    className="col-12 col-sm-6 col-lg-4"
+                    className="col-12 col-sm-6 col-xl-4"
                     key={product.id}
                 >
 

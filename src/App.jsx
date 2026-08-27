@@ -1,71 +1,90 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+    HashRouter,
+    Routes,
+    Route
+} from "react-router-dom";
 
 import Navbar from "./components/NavBar/Navbar";
-import Home from "./components/Home/Home";
-import ItemListContainer from "./components/ItemListContainer/ItemListContainer";
-import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer";
-import Cart from "./components/Cart/Cart";
-import Checkout from "./components/Checkout/Checkout";
-import Footer from "./components/Footer/Footer";
+
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+
+import Footer from "./components/Footer/Footer";
+
+import Home from "./components/Home/Home";
+
+import ItemListContainer from "./components/ItemListContainer/ItemListContainer";
+
+import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer";
+
+import Cart from "./components/Cart/Cart";
+
+import Checkout from "./components/Checkout/Checkout";
+
+import NotFound from "./components/NotFound/NotFound";
+
 
 function App() {
 
     return (
 
-        <BrowserRouter>
+        <HashRouter>
 
             <Navbar />
 
-            
-        <ScrollToTop />
-        
+            <ScrollToTop />
+
             <Routes>
 
-            {/* Home */}
-            <Route
-                path="/"
-                element={<Home />}
-            />
+                <Route
+                    path="/"
+                    element={<Home />}
+                />
 
-            {/* Catálogo */}
-            <Route
-                path="/productos"
-                element={<ItemListContainer />}
-            />
 
-            {/* Categorías */}
-            <Route
-                path="/categoria/:categoryId"
-                element={<ItemListContainer />}
-            />
+                <Route
+                    path="/productos"
+                    element={<ItemListContainer />}
+                />
 
-            {/* Detalle */}
-            <Route
-                path="/item/:itemId"
-                element={<ItemDetailContainer />}
-            />
 
-            {/* Carrito */}
-            <Route
-                path="/cart"
-                element={<Cart />}
-            />
+                <Route
+                    path="/categoria/:categoryId"
+                    element={<ItemListContainer />}
+                />
 
-            {/* Checkout */}
-            <Route
-                path="/checkout"
-                element={<Checkout />}
-            />
 
-        </Routes>
+                <Route
+                    path="/item/:itemId"
+                    element={<ItemDetailContainer />}
+                />
 
-        <Footer />
 
-        </BrowserRouter>
+                <Route
+                    path="/cart"
+                    element={<Cart />}
+                />
+
+
+                <Route
+                    path="/checkout"
+                    element={<Checkout />}
+                />
+
+
+                <Route
+                    path="*"
+                    element={<NotFound />}
+                />
+
+            </Routes>
+
+            <Footer />
+
+        </HashRouter>
 
     );
 
 }
+
 
 export default App;

@@ -1,47 +1,48 @@
-import "./AboutSection.css";
 import {
     FaVolleyballBall,
     FaBolt,
     FaUsers
 } from "react-icons/fa";
 
+import "./AboutSection.css";
+
+
 function AboutSection() {
+
+    const baseUrl = import.meta.env.BASE_URL;
+
 
     return (
 
         <section
-            id="nosotros"
             className="about"
+            id="nosotros"
         >
 
             <div className="container">
 
                 <div className="row align-items-center g-5">
 
-                    {/* Imagen / elemento visual */}
+                    {/* Imagen */}
 
-                    <div className="col-lg-6 animate-fade-up">
+                    <div className="col-lg-6">
 
-                        <div className="about__visual">
+                        <div className="about__image">
 
-                            <div className="about__image">
+                            <img
+                                src={`${baseUrl}images/about-volley.jpg`}
+                                alt="Equipo de vóley reunido en cancha"
+                            />
 
-                                <span>
-                                <FaVolleyballBall />
-                                </span>
 
-                            </div>
-
-                            <div className="about__experience">
+                            <div className="about__image-badge">
 
                                 <strong>
-                                    +10
+                                    Volley
                                 </strong>
 
                                 <span>
-                                    años acompañando
-                                    <br />
-                                    al vóley
+                                    Store
                                 </span>
 
                             </div>
@@ -55,103 +56,126 @@ function AboutSection() {
 
                     <div className="col-lg-6 animate-fade-up">
 
-                        <span className="section-eyebrow">
-                            SOBRE VOLLEY STORE
-                        </span>
+                        <div className="about__content">
 
-                        <h2 className="about__title">
-                            Nacimos dentro
-                            <span> de una cancha.</span>
-                        </h2>
-
-                        <p className="about__lead">
-
-                            Volley Store nació con una idea simple:
-                            hacer que los jugadores de vóley puedan
-                            encontrar en un solo lugar productos
-                            pensados realmente para su deporte.
-
-                        </p>
-
-                        <p className="about__text">
-
-                            Trabajamos para acercar equipamiento,
-                            indumentaria y accesorios de calidad a
-                            jugadores, entrenadores y clubes.
-                            Creemos que cada entrenamiento, cada
-                            partido y cada desafío merece contar con
-                            las herramientas adecuadas.
-
-                        </p>
+                            <span className="section-eyebrow">
+                                ¿QUIÉNES SOMOS?
+                            </span>
 
 
-                        <div className="about__values">
-
-                            <div className="about__value">
-
-                                <div className="about__image">
-
-                             <img
-                             src="/images/about-volley.jpg"
-                                alt="Equipo de vóley reunido en cancha"
-                             />
-
-                            </div>
-
-                                <div>
-
-                                    <h3>
-                                        Pasión
-                                    </h3>
-
-                                    <p>
-                                        Vivimos el deporte y entendemos
-                                        a quienes lo practican.
-                                    </p>
-
-                                </div>
-
-                            </div>
+                            <h2>
+                                Nacimos de la pasión por el vóley.
+                            </h2>
 
 
-                            <div className="about__value">
+                            <p className="about__lead">
 
-                                <span className="about__value-icon">
-                                <FaBolt />
-                                </span>
+                                Volley Store nació con una idea simple:
+                                crear un espacio pensado especialmente
+                                para quienes viven este deporte.
 
-                                <div>
+                            </p>
 
-                                    <h3>
-                                        Calidad
-                                    </h3>
 
-                                    <p>
-                                        Seleccionamos productos pensando
-                                        en rendimiento y durabilidad.
-                                    </p>
+                            <p>
+
+                                Somos una tienda especializada en
+                                equipamiento, indumentaria y accesorios
+                                de vóley. Seleccionamos cada producto
+                                buscando combinar rendimiento, calidad
+                                y diseño.
+
+                            </p>
+
+
+                            <p>
+
+                                Nuestro objetivo es acompañar a jugadores,
+                                entrenadores y equipos dentro y fuera
+                                de la cancha.
+
+                            </p>
+
+
+                            <div className="about__values">
+
+                                <div className="about__value">
+
+                                    <div className="about__value-icon">
+
+                                        <FaVolleyballBall />
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <strong>
+                                            Pasión por el deporte
+                                        </strong>
+
+                                        <span>
+
+                                            Conocemos el juego porque
+                                            también lo vivimos.
+
+                                        </span>
+
+                                    </div>
 
                                 </div>
 
-                            </div>
+
+                                <div className="about__value">
+
+                                    <div className="about__value-icon">
+
+                                        <FaBolt />
+
+                                    </div>
 
 
-                            <div className="about__value">
+                                    <div>
 
-                                <span className="about__value-icon">
-                                <FaUsers />
-                                </span>
+                                        <strong>
+                                            Rendimiento
+                                        </strong>
 
-                                <div>
+                                        <span>
 
-                                    <h3>
-                                        Comunidad
-                                    </h3>
+                                            Productos pensados para
+                                            acompañar cada punto.
 
-                                    <p>
-                                        Creemos que el vóley se construye
-                                        en equipo.
-                                    </p>
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div className="about__value">
+
+                                    <div className="about__value-icon">
+
+                                        <FaUsers />
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <strong>
+                                            Comunidad
+                                        </strong>
+
+                                        <span>
+
+                                            Queremos crecer junto a quienes
+                                            hacen grande al vóley.
+
+                                        </span>
+
+                                    </div>
 
                                 </div>
 
@@ -170,5 +194,6 @@ function AboutSection() {
     );
 
 }
+
 
 export default AboutSection;
