@@ -1,0 +1,112 @@
+.featured-products {
+    padding: 7rem 0;
+    background-color: #0b1220;
+    color: #f8fafc;
+}
+
+.featured-products__header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.featured-products__header h2 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.featured-products__header p {
+    max-width: 400px;
+    margin: 0;
+    color: #94a3b8;
+    line-height: 1.7;
+}
+
+.featured-products__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    gap: 1rem;
+    color: #cbd5e1;
+}
+
+.featured-products__loading .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    color: #38bdf8;
+}
+
+
+/*
+ * Ajustamos las cards de Item para que
+ * funcionen sobre el fondo oscuro.
+ */
+
+.featured-products .card {
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid #1e293b;
+    border-radius: 14px;
+    background-color: #111827;
+    color: #f8fafc;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.featured-products .card:hover {
+    transform: translateY(-7px);
+    border-color: #38bdf8;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.featured-products .card-img-top {
+    height: 230px;
+    object-fit: cover;
+}
+
+.featured-products .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.featured-products .card-title {
+    font-weight: 700;
+}
+
+.featured-products .card-body p {
+    color: #94a3b8;
+}
+
+.featured-products .btn-primary {
+    margin-top: auto;
+    border: none;
+    background-color: #38bdf8;
+    color: #0b1220;
+    font-weight: 700;
+}
+
+.featured-products .btn-primary:hover {
+    background-color: #7dd3fc;
+}
+
+@media (max-width: 768px) {
+
+    .featured-products {
+        padding: 5rem 0;
+    }
+
+    .featured-products__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+}
