@@ -1,24 +1,36 @@
-import { useContext, useState } from "react";
+import {
+    useContext,
+    useState
+} from "react";
 
 import { Link } from "react-router-dom";
-
-import { CartContext } from "../../context/CartContext";
-
-import ItemCount from "../ItemCount/ItemCount";
 
 import {
     FaTruck,
     FaLock
 } from "react-icons/fa";
 
+import { CartContext } from "../../context/CartContext";
+
+import ItemCount from "../ItemCount/ItemCount";
+
+import formatPrice from "../../utils/formatPrice";
+
 import "./ItemDetail.css";
 
 
 function ItemDetail({ product }) {
 
-    const { addItem } = useContext(CartContext);
+    const { addItem } =
+        useContext(CartContext);
 
-    const [added, setAdded] = useState(false);
+
+    const [added, setAdded] =
+        useState(false);
+
+
+    const [error, setError] =
+        useState("");
 
 
     if (!product) {
@@ -30,6 +42,7 @@ function ItemDetail({ product }) {
                 <h2>
                     Producto no encontrado
                 </h2>
+
 
                 <Link
                     to="/productos"
@@ -44,30 +57,64 @@ function ItemDetail({ product }) {
 
     }
 
-        const finalPrice =
-        product.discount > 0
-            ? product.price * (1 - product.discount / 100)
+
+    const isOutOfStock =
+        product.stock <= 0;
+
+
+    const discount =
+        Number(product.discount) || 0;
+
+
+    const finalPrice =
+        discount > 0
+            ? Math.round(
+                product.price *
+                (1 - discount / 100)
+            )
             : product.price;
 
-            const productWithFinalPrice = {
-        ...product,
-        price: Math.round(finalPrice)
-    };
+
+    const handleAdd = (quantity) => {
+
+        /*
+         * Creamos una copia del producto
+         * utilizando como price el precio
+         * final que realmente paga el usuario.
+         */
+
+        const productWithFinalPrice = {
+
+            ...product,
+
+            originalPrice:
+                product.price,
+
+            price:
+                finalPrice
+
+        };
 
 
-        const isOutOfStock = product.stock <= 0;
+        const addedSuccessfully =
+            addItem(
+                productWithFinalPrice,
+                quantity
+            );
 
-
-        const handleAdd = (quantity) => {
-
-        const addedSuccessfully = addItem(
-            productWithFinalPrice,
-            quantity
-
-        );
 
         if (addedSuccessfully) {
-        setAdded(true);
+
+            setError("");
+
+            setAdded(true);
+
+        } else {
+
+            setError(
+                "No hay suficiente stock disponible."
+            );
+
         }
 
     };
@@ -83,20 +130,24 @@ function ItemDetail({ product }) {
 
                 <nav
                     className="product-detail__breadcrumb"
-                    aria-label="breadcrumb"
+                    aria-label="Breadcrumb"
                 >
 
                     <Link to="/">
                         Inicio
                     </Link>
 
-                    <span>/</span>
+                    <span>
+                        /
+                    </span>
 
                     <Link to="/productos">
                         Productos
                     </Link>
 
-                    <span>/</span>
+                    <span>
+                        /
+                    </span>
 
                     <span>
                         {product.name}
@@ -105,11 +156,9 @@ function ItemDetail({ product }) {
                 </nav>
 
 
-                {/* Product */}
-
                 <section className="product-detail__main">
 
-                    {/* Image */}
+                    {/* Imagen */}
 
                     <div className="product-detail__image-wrapper">
 
@@ -131,12 +180,15 @@ function ItemDetail({ product }) {
                     </div>
 
 
-                    {/* Information */}
+                    {/* Información */}
 
                     <div className="product-detail__content">
 
                         <span className="product-detail__eyebrow">
-                            VOLLEY STORE
+
+                            {product.brand ||
+                                "VOLLEY STORE"}
+
                         </span>
 
 
@@ -145,19 +197,78 @@ function ItemDetail({ product }) {
                         </h1>
 
 
-                       <div className="product-detail__price-wrapper">
+                        {/* Metadata */}
 
-                        {product.discount > 0 && (
+                        <div className="product-detail__meta">
 
-                        <span className="product-detail__price-original">
-                        ${product.price}
-                        </span>
+                            {product.brand && (
 
-                        )}
+                                <span>
 
-                        <p className="product-detail__price">
-                        ${Math.round(finalPrice)}
-                        </p>
+                                    Marca:
+
+                                    <strong>
+                                        {product.brand}
+                                    </strong>
+
+                                </span>
+
+                            )}
+
+
+                            {product.sku && (
+
+                                <span>
+
+                                    SKU:
+
+                                    <strong>
+                                        {product.sku}
+                                    </strong>
+
+                                </span>
+
+                            )}
+
+                        </div>
+
+
+                        {/* Precio */}
+
+                        <div className="product-detail__price-wrapper">
+
+                            {discount > 0 && (
+
+                                <span className="product-detail__price-original">
+
+                                    {formatPrice(
+                                        product.price
+                                    )}
+
+                                </span>
+
+                            )}
+
+
+                            <p className="product-detail__price">
+
+                                {formatPrice(
+                                    finalPrice
+                                )}
+
+                            </p>
+
+
+                            {discount > 0 && (
+
+                                <span className="product-detail__discount">
+
+                                    {discount}%
+                                    OFF
+
+                                </span>
+
+                            )}
 
                         </div>
 
@@ -165,45 +276,25 @@ function ItemDetail({ product }) {
                         <div className="product-detail__separator" />
 
 
+                        {/* Descripción */}
+
                         <div className="product-detail__description">
 
                             <h2>
                                 Sobre este producto
                             </h2>
 
+
                             <p>
+
                                 {product.description ||
                                     "Producto seleccionado por Volley Store para acompañarte dentro y fuera de la cancha."}
+
                             </p>
 
                         </div>
 
-                        <div className="product-detail__meta">
 
-                        {product.brand && (
-
-                            <span>
-                                Marca:
-                                <strong>
-                                {product.brand}
-                                </strong>
-                            </span>
-
-                            )}
-
-
-                            {product.sku && (
-
-                            <span>
-                                SKU:
-                                <strong>
-                                {product.sku}
-                                </strong>
-                            </span>
-
-                            )}
-
-                        </div>
                         {/* Stock */}
 
                         <div className="product-detail__stock">
@@ -215,6 +306,7 @@ function ItemDetail({ product }) {
                                         : "product-detail__stock-dot"
                                 }
                             />
+
 
                             <span>
 
@@ -228,9 +320,24 @@ function ItemDetail({ product }) {
                         </div>
 
 
-                        {/* Purchase */}
+                        {/* Error stock acumulado */}
 
-                        {!isOutOfStock && !added && (
+                        {error && (
+
+                            <div
+                                className="alert alert-danger"
+                                role="alert"
+                            >
+                                {error}
+                            </div>
+
+                        )}
+
+
+                        {/* ItemCount */}
+
+                        {!isOutOfStock &&
+                            !added && (
 
                             <div className="product-detail__purchase">
 
@@ -250,7 +357,7 @@ function ItemDetail({ product }) {
                         )}
 
 
-                        {/* Added state */}
+                        {/* Producto agregado */}
 
                         {added && (
 
@@ -281,7 +388,7 @@ function ItemDetail({ product }) {
                         )}
 
 
-                        {/* Benefits */}
+                        {/* Beneficios */}
 
                         <div className="product-detail__benefits">
 
@@ -290,6 +397,7 @@ function ItemDetail({ product }) {
                                 <span>
                                     <FaTruck />
                                 </span>
+
 
                                 <div>
 
@@ -309,8 +417,9 @@ function ItemDetail({ product }) {
                             <div className="product-detail__benefit">
 
                                 <span>
-                                     <FaLock />
+                                    <FaLock />
                                 </span>
+
 
                                 <div>
 

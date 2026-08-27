@@ -2,10 +2,14 @@ import { useContext } from "react";
 
 import { Link } from "react-router-dom";
 
+import {
+    FaShoppingBag,
+    FaLock
+} from "react-icons/fa";
+
 import { CartContext } from "../../context/CartContext";
 
-import { FaShoppingBag } from "react-icons/fa";
-import { FaLock } from "react-icons/fa";
+import formatPrice from "../../utils/formatPrice";
 
 import "./Cart.css";
 
@@ -16,18 +20,17 @@ function Cart() {
         cart,
         removeItem,
         clearCart,
-        getTotalQuantity
+        getTotalQuantity,
+        getTotal
     } = useContext(CartContext);
 
 
-    const total = cart.reduce(
-        (acc, item) =>
-            acc + item.price * item.quantity,
-        0
-    );
+    const total =
+        getTotal();
 
 
-    const totalQuantity = getTotalQuantity();
+    const totalQuantity =
+        getTotalQuantity();
 
 
     if (cart.length === 0) {
@@ -41,7 +44,9 @@ function Cart() {
                     <div className="empty-cart">
 
                         <div className="empty-cart__icon">
+
                             <FaShoppingBag />
+
                         </div>
 
 
@@ -56,8 +61,10 @@ function Cart() {
 
 
                         <p>
+
                             Explorá nuestro catálogo y encontrá
                             el equipamiento ideal para tu juego.
+
                         </p>
 
 
@@ -95,16 +102,23 @@ function Cart() {
                             TU COMPRA
                         </span>
 
+
                         <h1>
                             Carrito
                         </h1>
 
+
                         <p>
+
                             {totalQuantity}{" "}
+
                             {totalQuantity === 1
                                 ? "producto"
                                 : "productos"
-                            } en tu carrito.
+                            }{" "}
+
+                            en tu carrito.
+
                         </p>
 
                     </div>
@@ -123,7 +137,7 @@ function Cart() {
 
                 <div className="cart-layout">
 
-                    {/* Product list */}
+                    {/* Productos */}
 
                     <section className="cart-products">
 
@@ -151,7 +165,9 @@ function Cart() {
                                 <div className="cart-item__info">
 
                                     <span className="cart-item__category">
+
                                         {item.category}
+
                                     </span>
 
 
@@ -159,32 +175,49 @@ function Cart() {
                                         to={`/item/${item.id}`}
                                         className="cart-item__name"
                                     >
+
                                         {item.name}
+
                                     </Link>
 
 
                                     <p className="cart-item__unit-price">
-                                        Precio unitario: ${item.price}
+
+                                        Precio unitario:{" "}
+
+                                        {formatPrice(
+                                            item.price
+                                        )}
+
                                     </p>
 
 
                                     <div className="cart-item__meta">
 
                                         <span>
+
                                             Cantidad
+
                                             <strong>
                                                 {item.quantity}
                                             </strong>
+
                                         </span>
 
 
                                         <span>
+
                                             Subtotal
+
                                             <strong>
-                                                $
-                                                {item.price *
-                                                    item.quantity}
+
+                                                {formatPrice(
+                                                    item.price *
+                                                    item.quantity
+                                                )}
+
                                             </strong>
+
                                         </span>
 
                                     </div>
@@ -209,13 +242,14 @@ function Cart() {
                     </section>
 
 
-                    {/* Summary */}
+                    {/* Resumen */}
 
                     <aside className="cart-summary">
 
                         <span className="cart-summary__eyebrow">
                             RESUMEN
                         </span>
+
 
                         <h2>
                             Resumen de compra
@@ -244,7 +278,11 @@ function Cart() {
                                 </span>
 
                                 <strong>
-                                    ${total}
+
+                                    {formatPrice(
+                                        total
+                                    )}
+
                                 </strong>
 
                             </div>
@@ -272,7 +310,11 @@ function Cart() {
                             </span>
 
                             <strong>
-                                ${total}
+
+                                {formatPrice(
+                                    total
+                                )}
+
                             </strong>
 
                         </div>

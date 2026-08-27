@@ -1,15 +1,26 @@
 import { Link } from "react-router-dom";
 
+import formatPrice from "../../utils/formatPrice";
+
 import "./Item.css";
 
 
 function Item({ product }) {
 
-    const isOutOfStock = product.stock <= 0;
+    const isOutOfStock =
+        product.stock <= 0;
+
+
+    const discount =
+        Number(product.discount) || 0;
+
 
     const finalPrice =
-        product.discount > 0
-            ? product.price * (1 - product.discount / 100)
+        discount > 0
+            ? Math.round(
+                product.price *
+                (1 - discount / 100)
+            )
             : product.price;
 
 
@@ -40,10 +51,10 @@ function Item({ product }) {
                 )}
 
 
-                {product.discount > 0 && (
+                {discount > 0 && (
 
                     <span className="product-card__discount">
-                        -{product.discount}%
+                        -{discount}%
                     </span>
 
                 )}
@@ -79,7 +90,10 @@ function Item({ product }) {
             <div className="product-card__body">
 
                 <span className="product-card__eyebrow">
-                    {product.brand || "VOLLEY STORE"}
+
+                    {product.brand ||
+                        "VOLLEY STORE"}
+
                 </span>
 
 
@@ -92,17 +106,25 @@ function Item({ product }) {
 
                     <div className="product-card__price-wrapper">
 
-                        {product.discount > 0 && (
+                        {discount > 0 && (
 
                             <span className="product-card__price-original">
-                                ${product.price}
+
+                                {formatPrice(
+                                    product.price
+                                )}
+
                             </span>
 
                         )}
 
 
                         <span className="product-card__price">
-                            ${Math.round(finalPrice)}
+
+                            {formatPrice(
+                                finalPrice
+                            )}
+
                         </span>
 
                     </div>
@@ -112,8 +134,13 @@ function Item({ product }) {
                         to={`/item/${product.id}`}
                         className="product-card__button"
                     >
+
                         Ver producto
-                        <span>→</span>
+
+                        <span>
+                            →
+                        </span>
+
                     </Link>
 
                 </div>

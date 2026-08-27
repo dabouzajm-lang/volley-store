@@ -101,6 +101,7 @@
     font-size: 0.72rem;
 }
 
+
 /* =========================
    SEARCH + SORT
 ========================= */
@@ -117,6 +118,11 @@
     align-items: end;
 
     margin-bottom: 1.5rem;
+}
+
+
+.catalog-search {
+    min-width: 0;
 }
 
 
@@ -155,8 +161,6 @@
         0 0 0 4px rgba(56, 189, 248, 0.12);
 }
 
-
-/* Sort */
 
 .catalog-sort {
     display: flex;
@@ -251,6 +255,8 @@
     font-weight: 800;
 
     text-decoration: none;
+
+    white-space: nowrap;
 
     transition:
         color var(--transition-fast),
@@ -401,6 +407,8 @@
 
     padding: 0.75rem 1.25rem;
 
+    border: 0;
+
     border-radius: var(--radius-md);
 
     background-color: var(--color-dark);
@@ -412,6 +420,8 @@
     font-weight: 800;
 
     text-decoration: none;
+
+    cursor: pointer;
 }
 
 
@@ -423,10 +433,45 @@
 
 
 /* =========================
-   RESPONSIVE
+   TABLET
 ========================= */
 
-@media (max-width: 768px) {
+@media (max-width: 991px) {
+
+    .catalog-page {
+        padding: 3.5rem 0 5.5rem;
+    }
+
+
+    .catalog-header {
+        gap: 2rem;
+    }
+
+
+    .catalog-header h1 {
+        font-size: clamp(2.8rem, 7vw, 4rem);
+    }
+
+
+    .catalog-tools {
+        grid-template-columns:
+            minmax(0, 1fr)
+            210px;
+    }
+
+
+    .catalog-sort {
+        min-width: 0;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 767px) {
 
     .catalog-page {
         padding: 3rem 0 5rem;
@@ -439,20 +484,36 @@
         align-items: flex-start;
 
         gap: 1.5rem;
+
+        margin-bottom: 2rem;
+    }
+
+
+    .catalog-header h1 {
+        font-size: clamp(2.5rem, 11vw, 3.2rem);
+    }
+
+
+    .catalog-header p {
+        font-size: 0.92rem;
+
+        line-height: 1.65;
     }
 
 
     .catalog-header__count {
-        align-items: flex-start;
+        flex-direction: row;
+
+        align-items: baseline;
+
+        gap: 0.5rem;
     }
 
 
-    .catalog-filters {
-        margin-bottom: 2rem;
+    .catalog-header__count strong {
+        font-size: 1.5rem;
     }
 
-}
-@media (max-width: 768px) {
 
     .catalog-tools {
         grid-template-columns: 1fr;
@@ -461,8 +522,60 @@
 
     .catalog-sort {
         width: 100%;
+    }
 
-        min-width: 0;
+
+    .catalog-filters {
+        flex-wrap: nowrap;
+
+        overflow-x: auto;
+
+        gap: 0.5rem;
+
+        padding-bottom: 1rem;
+
+        margin-bottom: 2rem;
+
+        scrollbar-width: none;
+    }
+
+
+    .catalog-filters::-webkit-scrollbar {
+        display: none;
+    }
+
+
+    .catalog-filter {
+        flex-shrink: 0;
+    }
+
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 420px) {
+
+    .catalog-page {
+        padding-top: 2.5rem;
+    }
+
+
+    .catalog-header h1 {
+        font-size: 2.45rem;
+    }
+
+
+    .catalog-search input,
+    .catalog-sort select {
+        min-height: 46px;
+    }
+
+
+    .catalog-empty {
+        margin: 3.5rem auto;
     }
 
 }

@@ -100,7 +100,14 @@
 
 }
 
-* {
+
+/* =========================
+   RESET / BASE
+========================= */
+
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -110,8 +117,19 @@ html {
 }
 
 
+html,
+body,
+#root {
+    width: 100%;
+
+    min-height: 100%;
+}
+
+
 body {
     margin: 0;
+
+    overflow-x: hidden;
 
     background-color: var(--bg-main);
 
@@ -120,6 +138,8 @@ body {
     font-family: var(--font-main);
 
     -webkit-font-smoothing: antialiased;
+
+    text-rendering: optimizeLegibility;
 }
 
 
@@ -137,10 +157,15 @@ h6 {
 }
 
 
-img {
-    max-width: 100%;
+p {
+    overflow-wrap: break-word;
+}
 
+
+img {
     display: block;
+
+    max-width: 100%;
 }
 
 
@@ -152,6 +177,11 @@ select {
 }
 
 
+button {
+    touch-action: manipulation;
+}
+
+
 a {
     transition:
         color var(--transition-fast),
@@ -159,8 +189,30 @@ a {
         border-color var(--transition-fast);
 }
 
+
+/* =========================
+   FOCUS
+========================= */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid
+        rgba(56, 189, 248, 0.35);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================
+   REUSABLE SECTIONS
+========================= */
+
 .section {
-    padding: var(--section-padding) 0;
+    padding:
+        var(--section-padding) 0;
 }
 
 
@@ -205,7 +257,8 @@ a {
 .section__title {
     margin-bottom: 1rem;
 
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-size:
+        clamp(2.2rem, 5vw, 3.5rem);
 
     font-weight: 900;
 
@@ -225,15 +278,22 @@ a {
     line-height: 1.7;
 }
 
+
+/* =========================
+   ANIMATIONS
+========================= */
+
 @keyframes fadeUp {
 
     from {
         opacity: 0;
+
         transform: translateY(24px);
     }
 
     to {
         opacity: 1;
+
         transform: translateY(0);
     }
 
@@ -245,3 +305,46 @@ a {
         fadeUp 0.7s ease both;
 }
 
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+
+@media (
+    prefers-reduced-motion: reduce
+) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            0.01ms !important;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 576px) {
+
+    :root {
+        --section-padding: 4rem;
+    }
+
+}
