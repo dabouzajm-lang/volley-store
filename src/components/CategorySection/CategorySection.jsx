@@ -4,26 +4,29 @@ import "./CategorySection.css";
 
 function CategorySection() {
 
-    const categories = [
-        {
-            id: "pelotas",
-            name: "Pelotas",
-            description: "Pelotas para entrenamiento y competición.",
-            icon: "🏐"
-        },
-        {
-            id: "indumentaria",
-            name: "Indumentaria",
-            description: "Prendas pensadas para acompañar tu juego.",
-            icon: "👕"
-        },
-        {
-            id: "accesorios",
-            name: "Accesorios",
-            description: "Todo lo necesario para complementar tu equipamiento.",
-            icon: "🎒"
-        }
-    ];
+const categories = [
+            {
+                id: "pelotas",
+                name: "Pelotas",
+                description:
+                    "Pelotas para entrenamiento y competición.",
+                image: "/images/category-pelotas.jpg"
+            },
+            {
+                id: "indumentaria",
+                name: "Indumentaria",
+                description:
+                    "Prendas pensadas para acompañar tu juego.",
+                image: "/images/category-indumentaria.jpg"
+            },
+            {
+                id: "accesorios",
+                name: "Accesorios",
+                description:
+                    "Todo lo necesario para complementar tu equipamiento.",
+                image: "/images/category-accesorios.jpg"
+            }
+        ];
 
     return (
 
@@ -31,7 +34,7 @@ function CategorySection() {
 
             <div className="container">
 
-                <div className="categories__header">
+                <div className="categories__header animate-fade-up">
 
                     <div>
 
@@ -64,29 +67,38 @@ function CategorySection() {
                         >
 
                             <Link
-                                to={`/categoria/${category.id}`}
-                                className="category-card"
+                            to={`/categoria/${category.id}`}
+                            className="category-card"
                             >
 
-                                <div className="category-card__icon">
-                                    {category.icon}
-                                </div>
+                            <img
+                            src={category.image}
+                            alt={category.name}
+                            className="category-card__image"
+                            />
 
-                                <div>
+                            <div className="category-card__overlay"></div>
 
-                                    <h3>
-                                        {category.name}
-                                    </h3>
+                            <div className="category-card__content">
 
-                                    <p>
-                                        {category.description}
-                                    </p>
+                            <span className="category-card__eyebrow">
+                            CATEGORÍA
+                            </span>
 
-                                    <span className="category-card__link">
-                                        Ver productos →
-                                    </span>
+                            <h3>
+                            {category.name}
+                            </h3>
 
-                                </div>
+                            <p>
+                            {category.description}
+                            </p>
+
+                            <span className="category-card__link">
+                            Explorar →
+                            </span>
+
+                            </div>          
+
 
                             </Link>
 

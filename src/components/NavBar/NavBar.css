@@ -1,0 +1,210 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    min-height: 76px;
+
+    background-color: rgba(11, 18, 32, 0.95);
+
+    border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.navbar {
+    backdrop-filter: blur(14px);
+}
+
+/* Brand */
+
+.navbar__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+
+    color: var(--color-primary);
+
+    text-decoration: none;
+}
+
+.navbar__brand:hover {
+    color: #f8fafc;
+}
+
+
+.navbar__brand-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 10px;
+
+    background-color: #38bdf8;
+
+    color: #0b1220;
+
+    font-size: 1.3rem;
+    font-weight: 900;
+
+    transform: skew(-8deg);
+}
+
+
+.navbar__brand-text {
+    display: flex;
+    flex-direction: column;
+
+    line-height: 1;
+}
+
+
+.navbar__brand-text strong {
+    font-size: 1rem;
+    font-weight: 900;
+
+    letter-spacing: 0.08em;
+}
+
+
+.navbar__brand-text small {
+    margin-top: 4px;
+
+    color: #38bdf8;
+
+    font-size: 0.55rem;
+    font-weight: 800;
+
+    letter-spacing: 0.3em;
+}
+
+
+/* Links */
+
+.navbar-nav {
+    gap: 0.35rem;
+}
+
+
+.navbar__link {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+
+    padding: 0.65rem 0.9rem;
+
+    color: #cbd5e1;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        color 0.25s ease;
+}
+
+
+.navbar__link::after {
+    content: "";
+
+    position: absolute;
+
+    right: 0.9rem;
+    bottom: 0.35rem;
+    left: 0.9rem;
+
+    height: 2px;
+
+    border-radius: 10px;
+
+    background-color: #38bdf8;
+
+    transform: scaleX(0);
+
+    transform-origin: center;
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+.navbar__link:hover {
+    color: #f8fafc;
+}
+
+
+.navbar__link:hover::after,
+.navbar__link--active::after {
+    transform: scaleX(1);
+}
+
+
+.navbar__link--active {
+    color: #f8fafc;
+}
+
+
+/* Cart */
+
+.navbar__cart {
+    display: flex;
+    align-items: center;
+
+    margin-left: 1rem;
+}
+
+
+/* Mobile */
+
+@media (max-width: 991px) {
+
+    .navbar {
+        min-height: 70px;
+    }
+
+
+    .navbar-collapse {
+        padding: 1.5rem 0;
+    }
+
+
+    .navbar-nav {
+        gap: 0.25rem;
+    }
+
+
+    .navbar__link {
+        width: 100%;
+        padding: 0.8rem 0;
+    }
+
+
+    .navbar__link::after {
+        right: auto;
+        bottom: 0.3rem;
+        left: 0;
+
+        width: 35px;
+    }
+
+
+    .navbar__cart {
+        margin-top: 1rem;
+        margin-left: 0;
+    }
+
+}
+
+.navbar__scroll-link {
+    border: 0;
+
+    background: none;
+
+    cursor: pointer;
+}

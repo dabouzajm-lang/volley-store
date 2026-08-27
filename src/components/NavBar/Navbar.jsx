@@ -1,32 +1,60 @@
-import { Link } from "react-router-dom";
-
+import { NavLink, Link } from "react-router-dom";
+import ScrollLink from "../ScrollLink/ScrollLink";
 import CartWidget from "../CartWidget/CartWidget";
+
+import "./Navbar.css";
 
 
 function Navbar() {
 
+    const getNavLinkClass = ({ isActive }) =>
+        isActive
+            ? "navbar__link navbar__link--active"
+            : "navbar__link";
+
+
     return (
 
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-lg navbar-dark">
 
             <div className="container">
 
+                {/* Logo */}
+
                 <Link
                     to="/"
-                    className="navbar-brand"
+                    className="navbar__brand"
                 >
-                    Volley Store
+
+                    <span className="navbar__brand-mark">
+                        V
+                    </span>
+
+                    <span className="navbar__brand-text">
+
+                        <strong>
+                            VOLLEY
+                        </strong>
+
+                        <small>
+                            STORE
+                        </small>
+
+                    </span>
+
                 </Link>
 
+
+                {/* Mobile button */}
 
                 <button
                     className="navbar-toggler"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav"
+                    data-bs-target="#navbarContent"
+                    aria-controls="navbarContent"
                     aria-expanded="false"
-                    aria-label="Toggle navigation"
+                    aria-label="Abrir navegación"
                 >
 
                     <span className="navbar-toggler-icon"></span>
@@ -34,56 +62,80 @@ function Navbar() {
                 </button>
 
 
+                {/* Navigation */}
+
                 <div
                     className="collapse navbar-collapse"
-                    id="navbarNav"
+                    id="navbarContent"
                 >
 
-                    <div className="navbar-nav">
+                    <ul className="navbar-nav mx-auto">
 
-                        <Link
-                            to="/"
-                            className="nav-link"
-                        >
-                            Todos
-                        </Link>
+                        <li className="nav-item">
 
+                            <NavLink
+                                to="/"
+                                className={getNavLinkClass}
+                            >
+                                Inicio
+                            </NavLink>
 
-                        <Link
-                            to="/categoria/pelotas"
-                            className="nav-link"
-                        >
-                            Pelotas
-                        </Link>
+                        </li>
 
 
-                        <Link
-                            to="/categoria/accesorios"
-                            className="nav-link"
-                        >
-                            Accesorios
-                        </Link>
+                        <li className="nav-item">
+
+                            <NavLink
+                                to="/productos"
+                                className={getNavLinkClass}
+                            >
+                                Productos
+                            </NavLink>
+
+                        </li>
 
 
-                        <Link
-                            to="/categoria/indumentaria"
-                            className="nav-link"
-                        >
-                            Indumentaria
-                        </Link>
+                        <li className="nav-item">
+
+                            <NavLink
+                                to="/categoria/pelotas"
+                                className={getNavLinkClass}
+                            >
+                                Pelotas
+                            </NavLink>
+
+                        </li>
 
 
-                        <Link
-                            to="/categoria/calzado"
-                            className="nav-link"
-                        >
-                            Calzado
-                        </Link>
+                        <li className="nav-item">
 
-                    </div>
+                            <NavLink
+                                to="/categoria/indumentaria"
+                                className={getNavLinkClass}
+                            >
+                                Indumentaria
+                            </NavLink>
+
+                        </li>
 
 
-                    <div className="ms-auto">
+                        <li className="nav-item">
+
+                           <ScrollLink
+                            sectionId="nosotros"
+                            className="navbar__link navbar__scroll-link"
+                            >
+                            Nosotros
+                            </ScrollLink>
+
+                        </li>
+
+                    </ul>
+
+
+                    {/* Cart */}
+
+                    <div className="navbar__cart">
 
                         <CartWidget />
 

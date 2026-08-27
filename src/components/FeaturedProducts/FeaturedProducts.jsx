@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 
 import {
     collection,
-    getDocs
+    getDocs,
+    query,
+    where
 } from "firebase/firestore";
 
 import { db } from "../../firebase";
@@ -23,20 +25,38 @@ function FeaturedProducts() {
 
     useEffect(() => {
 
-        const productsCollection = collection(db, "products");
+        const productsCollection = collection(
+            db,
+            "products"
+        );
 
 
-        getDocs(productsCollection)
+        const featuredProductsQuery = query(
+            productsCollection,
+            where(
+                "featured",
+                "==",
+                true
+            )
+        );
+
+
+        getDocs(featuredProductsQuery)
+
             .then((snapshot) => {
 
-                const productsList = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
+                const productsList = snapshot.docs.map(
+                    (doc) => ({
+                        id: doc.id,
+                        ...doc.data()
+                    })
+                );
 
-                setProducts(productsList.slice(0, 4));
+
+                setProducts(productsList);
 
             })
+
             .catch((error) => {
 
                 console.error(
@@ -44,9 +64,11 @@ function FeaturedProducts() {
                     error
                 );
 
+
                 setError(true);
 
             })
+
             .finally(() => {
 
                 setLoading(false);
@@ -70,10 +92,13 @@ function FeaturedProducts() {
                             className="spinner-border"
                             role="status"
                         >
+
                             <span className="visually-hidden">
                                 Cargando...
                             </span>
+
                         </div>
+
 
                         <p>
                             Cargando productos destacados...
@@ -111,13 +136,20 @@ function FeaturedProducts() {
     }
 
 
+    if (products.length === 0) {
+
+        return null;
+
+    }
+
+
     return (
 
         <section className="featured-products">
 
             <div className="container">
 
-                <div className="featured-products__header">
+                <div className="featured-products__header animate-fade-up">
 
                     <div>
 
@@ -125,15 +157,17 @@ function FeaturedProducts() {
                             SELECCIÓN VOLLEY STORE
                         </span>
 
+
                         <h2>
                             Productos destacados
                         </h2>
 
                     </div>
 
+
                     <p>
-                        Una selección de nuestros productos
-                        más destacados.
+                        Una selección de equipamiento que elegimos
+                        para acompañarte en tu próximo partido.
                     </p>
 
                 </div>
@@ -144,7 +178,7 @@ function FeaturedProducts() {
                     {products.map((product) => (
 
                         <div
-                            className="col-sm-6 col-lg-3"
+                            className="col-12 col-sm-6 col-lg-3"
                             key={product.id}
                         >
 

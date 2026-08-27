@@ -5,6 +5,9 @@ import Home from "./components/Home/Home";
 import ItemListContainer from "./components/ItemListContainer/ItemListContainer";
 import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailContainer";
 import Cart from "./components/Cart/Cart";
+import Checkout from "./components/Checkout/Checkout";
+import Footer from "./components/Footer/Footer";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 function App() {
 
@@ -14,6 +17,9 @@ function App() {
 
             <Navbar />
 
+            
+        <ScrollToTop />
+        
             <Routes>
 
             {/* Home */}
@@ -46,7 +52,15 @@ function App() {
                 element={<Cart />}
             />
 
+            {/* Checkout */}
+            <Route
+                path="/checkout"
+                element={<Checkout />}
+            />
+
         </Routes>
+
+        <Footer />
 
         </BrowserRouter>
 

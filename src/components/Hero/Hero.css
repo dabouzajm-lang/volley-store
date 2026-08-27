@@ -103,35 +103,6 @@
     margin: 0 auto;
 }
 
-.hero__circle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 360px;
-    height: 360px;
-    border: 1px solid rgba(56, 189, 248, 0.25);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.hero__ball {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    background: #f8fafc;
-    font-size: 8rem;
-    box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.35),
-        0 0 80px rgba(56, 189, 248, 0.12);
-    transform: translate(-50%, -50%);
-    animation: floatingBall 4s ease-in-out infinite;
-}
 
 .hero__badge {
     position: absolute;
@@ -157,19 +128,6 @@
 .hero__badge span {
     color: #cbd5e1;
     font-size: 0.75rem;
-}
-
-@keyframes floatingBall {
-
-    0%,
-    100% {
-        transform: translate(-50%, -50%);
-    }
-
-    50% {
-        transform: translate(-50%, -55%);
-    }
-
 }
 
 /* Responsive */
@@ -224,3 +182,97 @@
     }
 
 }
+.hero__button {
+    border: 0;
+
+    cursor: pointer;
+}
+
+.hero__button--secondary {
+    border: 1px solid #334155;
+}
+
+.hero__visual {
+    position: relative;
+    width: min(520px, 100%);
+    height: 540px;
+    margin: 0 auto;
+}
+
+.hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    border-radius: var(--radius-xl);
+
+    box-shadow:
+        0 35px 80px rgba(0, 0, 0, 0.35);
+
+    filter:
+        contrast(1.03)
+        saturate(0.95);
+}
+
+.hero__visual::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    border-radius: var(--radius-xl);
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(11, 18, 32, 0.28),
+            transparent 45%
+        );
+
+    pointer-events: none;
+}
+
+.hero__badge {
+    position: absolute;
+    right: -25px;
+    bottom: 35px;
+
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 130px;
+    height: 130px;
+
+    border: 7px solid var(--color-dark);
+    border-radius: 50%;
+
+    background-color: var(--color-primary);
+
+    color: var(--color-dark);
+
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.3);
+
+    text-align: center;
+}
+
+@media (max-width: 576px) {
+
+    .hero__visual {
+        height: 380px;
+    }
+
+    .hero__badge {
+        right: -5px;
+        bottom: 20px;
+
+        width: 105px;
+        height: 105px;
+    }
+
+}
+

@@ -1,42 +1,126 @@
 import { Link } from "react-router-dom";
 
+import "./Item.css";
+
 
 function Item({ product }) {
 
+    const isOutOfStock = product.stock <= 0;
+
+    const finalPrice =
+        product.discount > 0
+            ? product.price * (1 - product.discount / 100)
+            : product.price;
+
+
     return (
 
-        <div className="col-md-4 mb-4">
+        <article className="product-card">
 
-            <div className="card h-100">
+            <Link
+                to={`/item/${product.id}`}
+                className="product-card__image-wrapper"
+            >
+
+                {product.isNew && (
+
+                    <span className="product-card__new">
+                        Nuevo
+                    </span>
+
+                )}
+
+
+                {product.featured && (
+
+                    <span className="product-card__featured">
+                        Destacado
+                    </span>
+
+                )}
+
+
+                {product.discount > 0 && (
+
+                    <span className="product-card__discount">
+                        -{product.discount}%
+                    </span>
+
+                )}
+
 
                 <img
                     src={product.image}
-                    className="card-img-top"
+                    className="product-card__image"
                     alt={product.name}
                 />
 
-                <div className="card-body">
 
-                    <h5 className="card-title">
-                        {product.name}
-                    </h5>
+                {product.category && (
 
-                    <p>
-                        ${product.price}
-                    </p>
+                    <span className="product-card__category">
+                        {product.category}
+                    </span>
+
+                )}
+
+
+                {isOutOfStock && (
+
+                    <span className="product-card__stock">
+                        Sin stock
+                    </span>
+
+                )}
+
+            </Link>
+
+
+            <div className="product-card__body">
+
+                <span className="product-card__eyebrow">
+                    {product.brand || "VOLLEY STORE"}
+                </span>
+
+
+                <h3 className="product-card__title">
+                    {product.name}
+                </h3>
+
+
+                <div className="product-card__footer">
+
+                    <div className="product-card__price-wrapper">
+
+                        {product.discount > 0 && (
+
+                            <span className="product-card__price-original">
+                                ${product.price}
+                            </span>
+
+                        )}
+
+
+                        <span className="product-card__price">
+                            ${Math.round(finalPrice)}
+                        </span>
+
+                    </div>
+
 
                     <Link
                         to={`/item/${product.id}`}
-                        className="btn btn-primary"
+                        className="product-card__button"
                     >
-                        Ver detalle
+                        Ver producto
+                        <span>→</span>
                     </Link>
 
                 </div>
 
             </div>
 
-        </div>
+        </article>
 
     );
 
