@@ -27,7 +27,7 @@ function App() {
 
     return (
 
-        <HashRouter>
+        <BrowserRouter>
 
             <Navbar />
 
@@ -40,36 +40,30 @@ function App() {
                     element={<Home />}
                 />
 
-
                 <Route
                     path="/productos"
                     element={<ItemListContainer />}
                 />
-
 
                 <Route
                     path="/categoria/:categoryId"
                     element={<ItemListContainer />}
                 />
 
-
                 <Route
                     path="/item/:itemId"
                     element={<ItemDetailContainer />}
                 />
-
 
                 <Route
                     path="/cart"
                     element={<Cart />}
                 />
 
-
                 <Route
                     path="/checkout"
                     element={<Checkout />}
                 />
-
 
                 <Route
                     path="*"
@@ -80,7 +74,7 @@ function App() {
 
             <Footer />
 
-        </HashRouter>
+        </BrowserRouter>
 
     );
 
